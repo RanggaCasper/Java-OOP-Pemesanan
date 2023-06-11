@@ -45,6 +45,8 @@ class Customer extends Pesanan {
 	        	} else if (selectedMenu == 2) {
 	        		pesan();
 	        	} else if (selectedMenu == 3) {
+	        		bayarPesanan();
+	        	} else if (selectedMenu == 4) {
 	        		viewMenu();
 	        	}
 	      	} catch (Exception e) {
@@ -72,7 +74,8 @@ class Customer extends Pesanan {
 		System.out.println("==================================");
 		System.out.println("[1] Lihat Pesanan");
 		System.out.println("[2] Pesan");
-		System.out.println("[3] Back");
+		System.out.println("[3] Bayar Pesanan");
+		System.out.println("[4] Back");
 		System.out.println("==================================");
 	}
 
@@ -131,7 +134,7 @@ class Customer extends Pesanan {
 	                    System.out.println("Nama "+listMakanan.getJenis()+"   : " + listMakanan.getMenu());
 	                    System.out.println("Jumlah Pesanan : " + jumlahPesan);
 	                    float totalHargaMakanan = listMakanan.getHarga() * jumlahPesan;
-	                    System.out.println("Total Harga Makanan ID Menu " + listMakanan.getId() + " adalah Rp. " + totalHargaMakanan);
+	                    System.out.println("Total Harga "+listMakanan.getJenis()+" adalah Rp. " + totalHargaMakanan);
 	                    System.out.println("==========================");
 	                    totalHarga += totalHargaMakanan;
 	                    break;
@@ -142,13 +145,49 @@ class Customer extends Pesanan {
 	    }
 	}
 
-	private int getJumlahPesan(int idMakanan) {
-        int jumlahPesan = 0;
-        for (int i = 0; i < pesanans.size(); i++) {
-            if (pesanans.get(i) == idMakanan) {
-                jumlahPesan += pesananJumlah.get(i);
-            }
-        }
-        return jumlahPesan;
+    public void bayarPesanan(){
+    	if (checkPesanan()) {
+    		listPesanan();
+	    	System.out.println("===========================");
+	    	System.out.println("===[ Keterangan Metode ]===");
+	    	System.out.println("[1] Tunai");
+	    	System.out.println("[2] Tranfer (Biaya Service Rp. 500)");
+	    	System.out.println("===========================");
+	    	System.out.print("Metode Pembayaran : ");
+	    	int metode = scan.nextInt();
+	    	if (metode == 1) {
+	    		bayarPesanan("Tunai");
+	    	}else{
+	    		bayarPesanan("Tranfer");
+	    	}	
+    	}else{
+    		System.out.println("Maaf, kamu belum memiliki pesanan.");
+    	}
+    }
+
+    public void bayarPesanan(String metode){
+    	if (metode == "Tunai") {
+    		System.out.println("===========================");
+    		System.out.print("Jumlah Uang : ");
+    		float uang = scan.nextFloat();
+    		if (uang < getJumlahHarga()) {
+    			System.out.println("Maaf, uang anda kurang Rp. "+(getJumlahHarga()-uang));
+    		}else{
+    			System.out.println("===========================");
+    			System.out.println("Terimakasi telah berbelanja");
+    			System.out.println("Kembalian : "+(uang-getJumlahHarga()));
+    			pesanans.clear();
+    			pesananJumlah.clear();
+    		}
+    	}else{
+    		System.out.println("===========================");
+    		System.out.println("Silahkan Tranfer");
+    		System.out.println("- Dana");
+    		System.out.println("083189944777");
+    		System.out.println("===========================");
+    		System.out.println("Biaya Service Rp. 500");
+    		System.out.println("Nominal Pembayaran Rp. "+(getJumlahHarga()+500));
+    		System.out.println("===========================");
+    	}
     }
 }

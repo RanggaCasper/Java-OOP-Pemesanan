@@ -35,6 +35,38 @@ abstract class Pesanan{
         return false;
     }
 
+    protected boolean checkPesanan(){
+        if (pesanans.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    protected int getJumlahPesan(int idMakanan) {
+        int jumlahPesan = 0;
+        for (int i = 0; i < pesanans.size(); i++) {
+            if (pesanans.get(i) == idMakanan) {
+                jumlahPesan += pesananJumlah.get(i);
+            }
+        }
+        return jumlahPesan;
+    }
+
+    protected float getJumlahHarga(){
+        float totalHarga = 0;
+        for (Integer idMakanan : pesanans) {
+            int jumlahPesan = getJumlahPesan(idMakanan);
+            for (Menu listMakanan : menu.menus) {
+                if (listMakanan.getId() == idMakanan) {
+                    float totalHargaMakanan = listMakanan.getHarga() * jumlahPesan;
+                    totalHarga += totalHargaMakanan;
+                    break;
+                }
+            }
+        }
+        return totalHarga;
+    }
+
     public abstract void showMenu();
     public abstract void showHarga();
     public abstract void pesan();
