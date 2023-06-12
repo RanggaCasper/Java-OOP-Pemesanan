@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 class Customer extends Pesanan {
 
@@ -14,6 +15,12 @@ class Customer extends Pesanan {
 	      try {
 	        showMenu();
 	        int selectedMenu = chooseMenu();
+
+		        while (selectedMenu < 1 || selectedMenu > 3) {
+		          System.out.println("Maaf, tidak ada pilihan untuk menu yang kamu pilih");
+		          selectedMenu = chooseMenu();
+		        }
+
 	        	if (selectedMenu == 1) {
 	        		cls.cls();
 	        		menu.listMenu();
@@ -24,8 +31,9 @@ class Customer extends Pesanan {
 	        		main.login();
 	        		return;
 	        	}
-	      	} catch (Exception e) {
-	        	System.out.println("Error: Inputan Salah!");
+	      	} catch (InputMismatchException e) {
+	        	System.out.println("Error: Inputan salah, inputan harus berupa angka!");
+	        	scan.nextLine();
 	      	}
 	      	System.out.print("Continue? (y): ");
 	      	isContinue = scan.next();
@@ -40,6 +48,11 @@ class Customer extends Pesanan {
 	        showHarga();
 	        int selectedMenu = chooseMenu();
 
+	        	while (selectedMenu < 1 || selectedMenu > 4) {
+		          System.out.println("Maaf, tidak ada pilihan untuk menu yang kamu pilih");
+		          selectedMenu = chooseMenu();
+		        }
+
 	        	if (selectedMenu == 1) {
 	        		listPesanan();
 	        	} else if (selectedMenu == 2) {
@@ -49,8 +62,9 @@ class Customer extends Pesanan {
 	        	} else if (selectedMenu == 4) {
 	        		viewMenu();
 	        	}
-	      	} catch (Exception e) {
-	        	System.out.println("Error: Inputan Salah!");
+	      	} catch (InputMismatchException e) {
+	        	System.out.println("Error: Inputan salah, inputan harus berupa angka!");
+	        	scan.nextLine();
 	      	}
 	      	System.out.print("Continue? (y): ");
 	      	isContinue = scan.next();
@@ -175,7 +189,7 @@ class Customer extends Pesanan {
     		}else{
     			System.out.println("===========================");
     			System.out.println("Terimakasi telah berbelanja");
-    			System.out.println("Kembalian : "+(uang-getJumlahHarga()));
+    			System.out.println("Kembalian : Rp. "+(uang-getJumlahHarga()));
     			pesanans.clear();
     			pesananJumlah.clear();
     		}
