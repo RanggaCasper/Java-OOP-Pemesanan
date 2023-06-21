@@ -37,7 +37,7 @@ class Main{
         String username = scan.nextLine().toLowerCase();
         System.out.print("=> Password : ");
         String password = scan.nextLine().toLowerCase();
-
+        customer.setCustomer(username);
         int valid = isValidLogin(username,password);
         
         if (valid == 1) {
@@ -59,6 +59,7 @@ class Main{
     	User user1 = new User(1,"admin","admin",1);
     	User user2 = new User(2,"c","c",2);
     	User user3 = new User(3,"rangga","rangga",1);
+        User user4 = new User(4,"a","a",2);
 
         Menu menu1 = new Menu(1,"Nasi Goreng","Makanan",10000);
         Menu menu2 = new Menu(2,"Ayam Geprek","Makanan",10000);
@@ -69,6 +70,7 @@ class Main{
     	user.users.add(user1);
     	user.users.add(user2);
     	user.users.add(user3);
+        user.users.add(user4);
 
         menu.menus.add(menu1);
         menu.menus.add(menu2);

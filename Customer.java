@@ -7,6 +7,11 @@ class Customer extends Pesanan {
 	private static Scanner scan = new Scanner(System.in);
 	private static Cls cls = new Cls();
 	private static Main main = new Main();
+	private String customer;
+
+	public void setCustomer(String username){
+		this.customer = username;
+	}
 
 	public void viewMenu(){
 		String isContinue = "y";
@@ -74,6 +79,7 @@ class Customer extends Pesanan {
 	// Show
 	public void showMenu() {
 		cls.cls();
+		System.out.println("Hai, "+customer);
 		System.out.println("Pemesanan Makanan dan Minuman");
 		System.out.println("==================================");
 		System.out.println("[1] Lihat Harga Makanan dan Minuman");
@@ -115,7 +121,7 @@ class Customer extends Pesanan {
 
 		    for (Menu listMakanan : menu.menus) {
             	if (listMakanan.getId() == idMakanan) {
-            		sendMakanan(idMakanan, jumlahPesan);
+            		sendMakanan(customer, idMakanan, jumlahPesan);
             		menuFound = true;
             		break;
             	}
@@ -131,36 +137,55 @@ class Customer extends Pesanan {
 	}
 
 	public void listPesanan() {
-		cls.cls();
+	    cls.cls();
 	    System.out.println("==> List Pesanan");
 	    System.out.println("==========================");
-	    if (pesanans.isEmpty()) {
-	        System.out.println("Tidak ada pesanan.");
-	    } else {
-	        System.out.println("Makanan yang dipesan :");
-	        float totalHarga = 0;
-	        for (Integer idMakanan : pesanans) {
-	            int jumlahPesan = getJumlahPesan(idMakanan);
-	            for (Menu listMakanan : menu.menus) {
-	                if (listMakanan.getId() == idMakanan) {
-	                    System.out.println("ID Menu        : " + listMakanan.getId());
-	                    System.out.println("Harga "+listMakanan.getJenis()+"  : Rp. " + listMakanan.getHarga() + " / "+listMakanan.getJenis());
-	                    System.out.println("Nama "+listMakanan.getJenis()+"   : " + listMakanan.getMenu());
-	                    System.out.println("Jumlah Pesanan : " + jumlahPesan);
-	                    float totalHargaMakanan = listMakanan.getHarga() * jumlahPesan;
-	                    System.out.println("Total Harga "+listMakanan.getJenis()+" adalah Rp. " + totalHargaMakanan);
-	                    System.out.println("==========================");
-	                    totalHarga += totalHargaMakanan;
-	                    break;
+
+	    boolean pesananDitemukan = false;
+	    float totalHarga = 0;
+
+	    for (int i = 0; i < pemesan.size(); i++) {
+	        String pemesanData = pemesan.get(i);
+	        if (pemesanData.equals(customer)) {
+	            pesananDitemukan = true;
+	            System.out.println("Pesanan " + customer);
+	            System.out.println("Makanan yang dipesan :");
+
+	            for (int j = 0; j < pesanans.size(); j++) {
+	                String pemesanPesanan = pemesan.get(j);
+	                if (pemesanPesanan.equals(customer)) {
+	                    int idMakanan = pesanans.get(j);
+	                    int jumlahPesan = getJumlahPesan(idMakanan);
+
+	                    for (Menu listMakanan : menu.menus) {
+	                        if (listMakanan.getId() == idMakanan) {
+	                            System.out.println("ID Menu        : " + listMakanan.getId());
+	                            System.out.println("Harga " + listMakanan.getJenis() + "  : Rp. " + listMakanan.getHarga() + " / " + listMakanan.getJenis());
+	                            System.out.println("Nama " + listMakanan.getJenis() + "   : " + listMakanan.getMenu());
+	                            System.out.println("Jumlah Pesanan : " + jumlahPesan);
+	                            float totalHargaMakanan = listMakanan.getHarga() * jumlahPesan;
+	                            System.out.println("Total Harga " + listMakanan.getJenis() + " adalah Rp. " + totalHargaMakanan);
+	                            System.out.println("==========================");
+	                            totalHarga += totalHargaMakanan;
+	                            break;
+	                        }
+	                    }
 	                }
 	            }
+
+	            System.out.println("Total Harga yang harus dibayar adalah Rp. " + totalHarga);
+	            break;
 	        }
-	        System.out.println("Total Harga yang harus dibayar adalah Rp. " + totalHarga);
+	    }
+
+	    if (!pesananDitemukan) {
+	        System.out.println("Tidak ada pesanan.");
 	    }
 	}
 
+
     public void bayarPesanan(){
-    	if (checkPesanan()) {
+    	if (checkPesanan(customer)) {
     		listPesanan();
 	    	System.out.println("===========================");
 	    	System.out.println("===[ Keterangan Metode ]===");
@@ -179,29 +204,43 @@ class Customer extends Pesanan {
     	}
     }
 
-    public void bayarPesanan(String metode){
-    	if (metode == "Tunai") {
-    		System.out.println("===========================");
-    		System.out.print("Jumlah Uang : ");
-    		float uang = scan.nextFloat();
-    		if (uang < getJumlahHarga()) {
-    			System.out.println("Maaf, uang anda kurang Rp. "+(getJumlahHarga()-uang));
-    		}else{
-    			System.out.println("===========================");
-    			System.out.println("Terimakasi telah berbelanja");
-    			System.out.println("Kembalian : Rp. "+(uang-getJumlahHarga()));
-    			pesanans.clear();
-    			pesananJumlah.clear();
-    		}
-    	}else{
-    		System.out.println("===========================");
-    		System.out.println("Silahkan Tranfer");
-    		System.out.println("- Dana");
-    		System.out.println("083189944777");
-    		System.out.println("===========================");
-    		System.out.println("Biaya Service Rp. 500");
-    		System.out.println("Nominal Pembayaran Rp. "+(getJumlahHarga()+500));
-    		System.out.println("===========================");
-    	}
-    }
+    public void bayarPesanan(String metode) {
+	    if (metode.equals("Tunai")) {
+	        System.out.println("===========================");
+	        System.out.print("Jumlah Uang : ");
+	        float uang = scan.nextFloat();
+	        float jumlahHarga = getJumlahHarga(customer);
+	        if (uang < jumlahHarga) {
+	            System.out.println("Maaf, uang anda kurang Rp. " + (jumlahHarga - uang));
+	        } else {
+	            System.out.println("===========================");
+	            System.out.println("Terimakasi telah berbelanja");
+	            System.out.println("Kembalian : Rp. " + (uang - jumlahHarga));
+	            for (int i = pesanans.size() - 1; i >= 0; i--) {
+	                if (pemesan.get(i).equals(customer)) {
+	                    pesanans.remove(i);
+	                }
+	            }
+	            for (int i = pesananJumlah.size() - 1; i >= 0; i--) {
+	                if (pemesan.get(i).equals(customer)) {
+	                    pesananJumlah.remove(i);
+	                }
+	            }
+	            for (int i = pemesan.size() - 1; i >= 0; i--) {
+	                if (pemesan.get(i).equals(customer)) {
+	                    pemesan.remove(i);
+	                }
+	            }
+	        }
+	    } else {
+	        System.out.println("===========================");
+	        System.out.println("Silahkan Tranfer");
+	        System.out.println("- Dana");
+	        System.out.println("083189944777");
+	        System.out.println("===========================");
+	        System.out.println("Biaya Service Rp. 500");
+	        System.out.println("Nominal Pembayaran Rp. " + (getJumlahHarga(customer) + 500));
+	        System.out.println("===========================");
+	    }
+	}
 }
