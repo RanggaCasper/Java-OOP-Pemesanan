@@ -53,14 +53,16 @@ class Menu{
 	}
 
 	public void listMenu(){
-		System.out.println("==> List Menu");
-		System.out.println("==========================");
+		System.out.println("██████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀███████");
+		System.out.println("██████             LIST MENU             ███████");
+		System.out.println("██████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄███████");
+		System.out.println("██████                                   ███████");
 		for (Menu dataMenu : menus) {
-			System.out.println("ID Menu : " + dataMenu.getId());
-			System.out.println("Nama    : " + dataMenu.getMenu());
-			System.out.println("Jenis   : " + dataMenu.getJenis());
-			System.out.println("Harga   : Rp. " + dataMenu.getHarga());
-			System.out.println("=========================");
+			System.out.println("\tID Menu : " + dataMenu.getId());
+			System.out.println("\tNama    : " + dataMenu.getMenu());
+			System.out.println("\tJenis   : " + dataMenu.getJenis());
+			System.out.println("\tHarga   : Rp. " + dataMenu.getHarga());
+			System.out.println("------------------------------------------------");
 		}
 	}
 }

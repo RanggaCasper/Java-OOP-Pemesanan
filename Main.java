@@ -30,12 +30,16 @@ class Main{
 
     public static void login(){
         cls.cls();
-        System.out.println("|============================|");
-        System.out.println("|=======[ Login Page ]=======|");
-        System.out.println("|============================|");
-        System.out.print("=> Username : ");
+        System.out.println("\t██╗░░░░░░█████╗░░██████╗░██╗███╗░░██╗");
+        System.out.println("\t██║░░░░░██╔══██╗██╔════╝░██║████╗░██║");
+        System.out.println("\t██║░░░░░██║░░██║██║░░██╗░██║██╔██╗██║");
+        System.out.println("\t██║░░░░░██║░░██║██║░░╚██╗██║██║╚████║");
+        System.out.println("\t███████╗╚█████╔╝╚██████╔╝██║██║░╚███║");
+        System.out.println("\t╚══════╝░╚════╝░░╚═════╝░╚═╝╚═╝░░╚══╝\n");
+        System.out.println("\t         Start your Session\n");
+        System.out.print("\tUsername : ");
         String username = scan.nextLine().toLowerCase();
-        System.out.print("=> Password : ");
+        System.out.print("\tPassword : ");
         String password = scan.nextLine().toLowerCase();
         customer.setCustomer(username);
         int valid = isValidLogin(username,password);

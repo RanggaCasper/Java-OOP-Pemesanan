@@ -13,7 +13,7 @@ abstract class Pesanan{
 
     public void sendMakanan(String iniPemesan, int makanan, int jumlahPesan) {
         float totalHarga = 0;
-        if (isMakananExists(makanan)) {
+        if (isMakananExists(iniPemesan, makanan)) {
             System.out.println("Maaf, menu dengan ID " + makanan + " sudah ada di List Pesanan");
         } else {
             pemesan.add(iniPemesan);
@@ -29,14 +29,15 @@ abstract class Pesanan{
         }
     }
 
-    private boolean isMakananExists(int makanan) {
-        for (Integer idMakanan : pesanans) {
-            if (idMakanan == makanan) {
+    private boolean isMakananExists(String customer, int makanan) {
+        for (int i = 0; i < pemesan.size(); i++) {
+            if (pemesan.get(i).equals(customer) && pesanans.get(i) == makanan) {
                 return true;
             }
         }
         return false;
     }
+
 
     protected boolean checkPesanan(String customer) {
         for (String cekPemesan : pemesan) {
@@ -48,10 +49,10 @@ abstract class Pesanan{
     }
 
 
-    protected int getJumlahPesan(int idMakanan) {
+    protected int getJumlahPesan(String customer, int idMakanan) {
         int jumlahPesan = 0;
-        for (int i = 0; i < pesanans.size(); i++) {
-            if (pesanans.get(i) == idMakanan) {
+        for (int i = 0; i < pemesan.size(); i++) {
+            if (pemesan.get(i).equals(customer) && pesanans.get(i) == idMakanan) {
                 jumlahPesan += pesananJumlah.get(i);
             }
         }
@@ -67,7 +68,7 @@ abstract class Pesanan{
                 for (int j = 0; j < pesanans.size(); j++) {
                     if (pemesan.get(j).equals(customer)) {
                         int idMakanan = pesanans.get(j);
-                        int jumlahPesan = getJumlahPesan(idMakanan);
+                        int jumlahPesan = getJumlahPesan(customer, idMakanan);
                         for (Menu listMakanan : menu.menus) {
                             if (listMakanan.getId() == idMakanan) {
                                 float totalHargaMakanan = listMakanan.getHarga() * jumlahPesan;
@@ -83,8 +84,23 @@ abstract class Pesanan{
         return totalHarga;
     }
 
-    public abstract void showMenu();
-    public abstract void showHarga();
-    public abstract void pesan();
-    public abstract void listPesanan();
+    protected void hapusPesanan(String customer){
+        for (int i = pesanans.size() - 1; i >= 0; i--) {
+            if (pemesan.get(i).equals(customer)) {
+                pesanans.remove(i);
+            }
+        }
+        for (int i = pesananJumlah.size() - 1; i >= 0; i--) {
+            if (pemesan.get(i).equals(customer)) {
+                pesananJumlah.remove(i);
+            }
+        }
+        for (int i = pemesan.size() - 1; i >= 0; i--) {
+            if (pemesan.get(i).equals(customer)) {
+                pemesan.remove(i);
+            }
+        }
+    }
+
+    public abstract void showTransfer();
 }
