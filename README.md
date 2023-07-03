@@ -6,12 +6,13 @@
 # Admin
 - CRUD User
 - CRUD Menu (Makanan and Minuman)
+- Transfer Confirmation
 
 # Customer
 - View List Harga
 - View List Pesanan
 - Pesan (Makanan and Minuman)
-- Bayar Pesanan
+- Bayar Pesanan (Tunai and Transfer)
 
 # Java OOP
 - Polimerfisme
