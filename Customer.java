@@ -199,32 +199,36 @@ class Customer extends Pesanan {
 	    }
 	}
 
-
     public void bayarPesanan(){
-    	if (checkPesanan(customer)) {
-    		listPesanan();
-    		System.out.println();
-	    	System.out.println("██████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀███████");
-			System.out.println("██████          KETERANGAN METODE        ███████");
-			System.out.println("██████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄███████\n");
-	    	System.out.println("\t[1] Tunai");
-	    	System.out.println("\t[2] Tranfer (Biaya Service Rp. 500)\n");
-	    	System.out.println("████████████████████████████████████████████████\n");
-	    	System.out.print("\tMetode Pembayaran : ");
-	    	int metode = scan.nextInt();
-	    	while (metode < 1 || metode > 2) {
-	          System.out.println("\tMaaf, tidak ada pilihan untuk pembayaran yang kamu pilih");
-	          System.out.print("\tMetode Pembayaran : ");
-	          metode = scan.nextInt();
-	        }
-	    	if (metode == 1) {
-	    		bayarPesanan("Tunai");
-	    	}else if(metode == 2){
-	    		bayarPesanan("Transfer");
-	    	}
+    	if (tf.checkTransfer(customer)) {
+    		showTransfer();
     	}else{
-    		System.out.println("\tMaaf, kamu belum memiliki pesanan.");
+    		if (checkPesanan(customer)) {
+	    		listPesanan();
+	    		System.out.println();
+		    	System.out.println("██████▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀███████");
+				System.out.println("██████          KETERANGAN METODE        ███████");
+				System.out.println("██████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄███████\n");
+		    	System.out.println("\t[1] Tunai");
+		    	System.out.println("\t[2] Tranfer (Biaya Service Rp. 500)\n");
+		    	System.out.println("████████████████████████████████████████████████\n");
+		    	System.out.print("\tMetode Pembayaran : ");
+		    	int metode = scan.nextInt();
+		    	while (metode < 1 || metode > 2) {
+		          System.out.println("\tMaaf, tidak ada pilihan untuk pembayaran yang kamu pilih");
+		          System.out.print("\tMetode Pembayaran : ");
+		          metode = scan.nextInt();
+		        }
+		    	if (metode == 1) {
+		    		bayarPesanan("Tunai");
+		    	}else if(metode == 2){
+		    		bayarPesanan("Transfer");
+		    	}
+	    	}else{
+	    		System.out.println("\tMaaf, kamu belum memiliki pesanan.");
+	    	}
     	}
+    	
     }
 
     public void bayarPesanan(String metode) {
@@ -264,7 +268,7 @@ class Customer extends Pesanan {
 	            if (transferData.getStatus()) {
 	                hapusPesanan(customer);
 	                tf.hapusTransfer(customer);
-	                System.out.println("Terima kasih telah berbelanja.");
+	                System.out.println("Pembayaran dikonfirmasi, Terima kasih telah berbelanja.");
 	            } else {
 	                System.out.println("Pesanan sedang menunggu admin untuk konfirmasi pembayaran.");
 	            }

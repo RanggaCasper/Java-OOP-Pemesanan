@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Transfer {
+class Transfer extends Pesanan {
 
 	public static ArrayList<Transfer> transfers = new ArrayList<Transfer>();
 	private int id;
@@ -42,6 +42,15 @@ class Transfer {
 			System.out.println("------------------------------------------------");
 		}
 	}
+
+	public boolean checkTransfer(String customer) {
+        for (Transfer cekTransfer : transfers) {
+            if (cekTransfer.customer.equals(customer)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 	public void showTransfer(){
 		if (transfers.isEmpty()) {

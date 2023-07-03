@@ -38,7 +38,6 @@ abstract class Pesanan{
         return false;
     }
 
-
     protected boolean checkPesanan(String customer) {
         for (String cekPemesan : pemesan) {
             if (cekPemesan.equals(customer)) {
@@ -47,7 +46,6 @@ abstract class Pesanan{
         }
         return false;
     }
-
 
     protected int getJumlahPesan(String customer, int idMakanan) {
         int jumlahPesan = 0;
@@ -84,18 +82,18 @@ abstract class Pesanan{
         return totalHarga;
     }
 
-    protected void hapusPesanan(String customer){
-        for (int i = pesanans.size() - 1; i >= 0; i--) {
+    protected void hapusPesanan(String customer) {
+        for (int i = 0; i < pesanans.size(); i++) {
             if (pemesan.get(i).equals(customer)) {
                 pesanans.remove(i);
             }
         }
-        for (int i = pesananJumlah.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < pesananJumlah.size(); i++) {
             if (pemesan.get(i).equals(customer)) {
                 pesananJumlah.remove(i);
             }
         }
-        for (int i = pemesan.size() - 1; i >= 0; i--) {
+        for (int i = 0; i < pemesan.size(); i++) {
             if (pemesan.get(i).equals(customer)) {
                 pemesan.remove(i);
             }

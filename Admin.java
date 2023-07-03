@@ -8,11 +8,7 @@ class Admin extends User {
 	private static Cls cls = new Cls();
 	private static Main main = new Main();
 	private static Menu menu = new Menu();
-	private static Transfer tf = new Transfer();
-
-	public Admin(){
-
-	}
+	private static Pesanan tf = new Transfer();
 
 	// View Menu
 	
@@ -36,7 +32,8 @@ class Admin extends User {
 		    		viewUser();
 		    		return;
 		    	} else if (selectedMenu == 3) {
-		    		showTransfer();		    		
+		    		cls.cls();
+		    		tf.showTransfer();
 		    	} else if (selectedMenu == 4) {
 		    		main.login();
 		    		return;
@@ -168,11 +165,6 @@ class Admin extends User {
 		System.out.println("\t[4] Hapus User");
 		System.out.println("\t[5] Back\n");
 		System.out.println("████████████████████████████████████████████████");
-	}
-
-	public static void showTransfer(){
-		cls.cls();
-		tf.showTransfer();
 	}
 
 	// End Show Menu
