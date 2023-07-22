@@ -142,6 +142,14 @@ class Customer extends Pesanan {
 		    if (!menuFound) {
 		    	System.out.println("\tMaaf, Menu dengan ID " + idMakanan + " tidak ditemukan.");
 		    }
+
+		    // Revisi, jika customer membuat pesanan baru dan ada data transfer dari pesanan sebelumnya maka akan mengupdate data dari transferan tersebut
+		    for (Transfer transferData : tf.transfers) {
+		        if (transferData.getCustomer().equals(customer)) {
+		            tf.sendTransfer(customer,getJumlahHarga(customer));
+		            break;
+		        }
+		    }
 		    
 		    System.out.print("\tTambah Pesanan? (y) : ");
 		    isContinue = scan.next();
@@ -278,9 +286,8 @@ class Customer extends Pesanan {
 	    }
 
 	    if (!transferFound) {
-	        int transferId = tf.transfers.size() + 1;
-	        Transfer masukanTransfer = new Transfer(transferId, customer, getJumlahHarga(customer), false);
-	        tf.transfers.add(masukanTransfer);
+	    	// Revisi, data akan di kirimkan melalui method sendTransfer
+	    	tf.sendTransfer(customer,getJumlahHarga(customer));
 	        System.out.println("Pesanan sudah dimasukkan ke dalam List Pembayaran.");
 	    }
 	}

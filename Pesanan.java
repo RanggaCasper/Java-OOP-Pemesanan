@@ -83,22 +83,16 @@ abstract class Pesanan{
     }
 
     protected void hapusPesanan(String customer) {
-        for (int i = 0; i < pesanans.size(); i++) {
+        // Revisi, codingan sebelumnya tidak dapat menghapus data customer dengan benar karena mengalami bugs indeks object dilewatkan
+        for (int i = pesanans.size() - 1; i >= 0; i--) {
             if (pemesan.get(i).equals(customer)) {
                 pesanans.remove(i);
-            }
-        }
-        for (int i = 0; i < pesananJumlah.size(); i++) {
-            if (pemesan.get(i).equals(customer)) {
                 pesananJumlah.remove(i);
-            }
-        }
-        for (int i = 0; i < pemesan.size(); i++) {
-            if (pemesan.get(i).equals(customer)) {
                 pemesan.remove(i);
             }
         }
     }
+
 
     public abstract void showTransfer();
 }

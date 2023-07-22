@@ -8,6 +8,7 @@ class Transfer extends Pesanan {
 	private String customer;
 	private float pembayaran;
 	private boolean status;
+	private static int nextTransferId = 1;
 	private Scanner scan = new Scanner(System.in);
 
 	public Transfer(){
@@ -33,6 +34,10 @@ class Transfer extends Pesanan {
 		return customer;
 	}
 
+	public void setPembayaran(float pembayaran){
+		this.pembayaran = pembayaran;
+	}
+
 	public void listTransfer(){
 		for (Transfer transferCek : transfers ) {
 			System.out.println("ID Pembayaran     : "+transferCek.id);
@@ -42,6 +47,28 @@ class Transfer extends Pesanan {
 			System.out.println("------------------------------------------------");
 		}
 	}
+
+	// Revisi, penambahan method baru untuk menambahkan data baru kedalam arraylist
+	public void sendTransfer(String customer, float pembayaran) {
+        boolean transferFound = false;
+
+        for (int i = 0; i < transfers.size(); i++) {
+            Transfer transfer = transfers.get(i);
+            if (transfer.getCustomer().equals(customer)) {
+                transfer.setPembayaran(pembayaran);
+                transfer.setStatus(false);
+                transfers.set(i, transfer);
+                transferFound = true;
+                break;
+            }
+        }
+
+        if (!transferFound) {
+            int transferId = nextTransferId++;
+            Transfer newTransfer = new Transfer(transferId, customer, pembayaran, false);
+            transfers.add(newTransfer);
+        }
+    }
 
 	public boolean checkTransfer(String customer) {
         for (Transfer cekTransfer : transfers) {
